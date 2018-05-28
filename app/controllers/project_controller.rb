@@ -27,6 +27,9 @@ class ProjectController < ApplicationController
   end
 
   def update
+    @project.user = User.find_by_id(params[:userId]) if params.has_key? :userId
+    setup_links if params.has_key? :links
+    setup_languages if params.has_key? :languages
     if @project.update(params_required)
       render json: "project updated", status: 200
     else

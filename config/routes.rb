@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   put '/project/:id', to: 'project#update'
   delete '/project/:id', to: 'project#destroy'
 
+  # Skill routes
+  post '/skill/', to: 'skill#create'
+  get '/skill/:id', to: 'skill#show'
+  put '/skill/:id', to: 'skill#update'
+  delete '/skill/:id', to: 'skill#destroy'
+
 end
