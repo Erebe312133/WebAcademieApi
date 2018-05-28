@@ -8,4 +8,11 @@ Rails.application.routes.draw do
   put '/user/:id', to: 'user#update'
   delete '/user/:id', to: 'user#destroy'
 
+  # Project routes
+  get '/project', to: 'project#index'
+  post '/project/', to: 'project#create'
+  get '/project/:id', to: 'project#show'
+  put '/project/:id', to: 'project#update'
+  delete '/project/:id', to: 'project#destroy'
+
 end

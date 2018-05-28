@@ -15,7 +15,7 @@ class UserController < ApplicationController
     if @user.save
       render json: "successful operation", status: 202
     else
-      render json: "User already exist", status: 401
+      render json: "Invalid input", status: 401
     end
   end
 
