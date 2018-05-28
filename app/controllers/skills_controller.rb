@@ -1,4 +1,4 @@
-class SkillController < ApplicationController
+class SkillsController < ApplicationController
   before_action :find_skill, only: [:show, :update, :destroy]
 
   def create
@@ -12,7 +12,7 @@ class SkillController < ApplicationController
   end
 
   def show
-    render json: @skill, status: 200
+    render "skill/show", status: 200
   end
 
   def update

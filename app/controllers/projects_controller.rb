@@ -1,4 +1,4 @@
-class ProjectController < ApplicationController
+class ProjectsController < ApplicationController
   before_action :find_project, only: [:show, :update, :destroy]
 
   def index
@@ -6,7 +6,7 @@ class ProjectController < ApplicationController
     if @projects.blank?
       render json: "projects not found", status: 404
     else
-      render json: @projects, status: 200
+      render "project/index", status: 200
     end
   end
 
@@ -23,7 +23,7 @@ class ProjectController < ApplicationController
   end
 
   def show
-    render json: @project, status: 200
+    render "project/show", status: 200
   end
 
   def update

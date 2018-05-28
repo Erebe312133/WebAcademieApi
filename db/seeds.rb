@@ -47,3 +47,27 @@ Skill.create(
   name: "Php",
   mtype: "technical"
 )
+
+project = Project.create(
+  name: "Projet de fou",
+  descriptive: "Une description",
+  user: user
+)
+
+Language.create(
+  key: '0',
+  value: 'PHP',
+  project: project
+)
+
+Language.create(
+  key: '1',
+  value: 'NodeJS',
+  project: project
+)
+
+Link.create(
+  key: '0',
+  value: 'ProjetDeFou.dev',
+  project: project
+)

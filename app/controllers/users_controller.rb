@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class UsersController < ApplicationController
   before_action :find_user, only: [:show, :update, :destroy, :skill_list]
 
   def index
@@ -6,7 +6,7 @@ class UserController < ApplicationController
     if @users.blank?
       render json: "Users not found", status: 404
     else
-      render json: @users, status: 200
+      render "user/index", status: 200
     end
   end
 
@@ -20,7 +20,7 @@ class UserController < ApplicationController
   end
 
   def show
-    render json: @user, status: 200
+    render "user/show", status: 200
   end
 
   def update
@@ -37,17 +37,18 @@ class UserController < ApplicationController
   end
 
   def skill_list
-    render json: @user.skills.all
+    @skills = @user.skills.all
+    render "skill/index"
   end
 
   def index_by_skill
     @users = User.with_skill_type(params[:type])
-    render json: @users
+    render "user/index"
   end
 
   def index_by_skill_and_note
     @users = User.with_skill_type_and_note(params[:type], params[:note])
-    render json: @users
+    render "user/index"
   end
 
 
