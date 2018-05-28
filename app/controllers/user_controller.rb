@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :find_user, only: [:show, :update, :destroy]
+  before_action :find_user, only: [:show, :update, :destroy, :skill_list]
 
   def index
     @users = User.all
@@ -35,6 +35,21 @@ class UserController < ApplicationController
     @user.destroy
     render json: "User deleted", status: 200
   end
+
+  def skill_list
+    render json: @user.skills.all
+  end
+
+  def index_by_skill
+    @users = User.with_skill_type(params[:type])
+    render json: @users
+  end
+
+  def index_by_skill_and_note
+    @users = User.with_skill_type_and_note(params[:type], params[:note])
+    render json: @users
+  end
+
 
   private
   def find_user
