@@ -5,14 +5,14 @@ class SkillsController < ApplicationController
     @skill = Skill.new(params_required)
     @skill.user = User.find_by_id(params[:userId]) if params.has_key? :userId
     if @skill.save
-      render json: "successful operation", status: 202
+      render json: "Skill added sucessfully", status: 200
     else
-      render json: "Invalid input", status: 401
+      render json: "Invalid input", status: 405
     end
   end
 
   def show
-    render "skill/show", status: 200
+    render "skills/show", status: 200
   end
 
   def update

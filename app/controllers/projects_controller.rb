@@ -4,9 +4,9 @@ class ProjectsController < ApplicationController
   def index
     @projects = Project.all
     if @projects.blank?
-      render json: "projects not found", status: 404
+      render json: "Projects not found", status: 404
     else
-      render "project/index", status: 200
+      render "projects/index", status: 200
     end
   end
 
@@ -16,14 +16,14 @@ class ProjectsController < ApplicationController
     setup_links if params.has_key? :links
     setup_languages if params.has_key? :languages
     if @project.save
-      render json: "successful operation", status: 202
+      render json: "Project added", status: 200
     else
-      render json: "Invalid input", status: 401
+      render json: "Invalid input", status: 405
     end
   end
 
   def show
-    render "project/show", status: 200
+    render "projects/show", status: 200
   end
 
   def update
@@ -31,22 +31,22 @@ class ProjectsController < ApplicationController
     setup_links if params.has_key? :links
     setup_languages if params.has_key? :languages
     if @project.update(params_required)
-      render json: "project updated", status: 200
+      render json: "Project updated", status: 200
     else
-      render json: "Invalid data supplied", status: 400
+      render json: "Invalid input", status: 405
     end
   end
 
   def destroy
     @project.destroy
-    render json: "project deleted", status: 200
+    render json: "Project deleted", status: 200
   end
 
   private
   def find_project
     @project = Project.find_by_id(params[:id])
     if @project.blank?
-      render json: "project not found", status: 404
+      render json: "Project not found", status: 404
     end
   end
 

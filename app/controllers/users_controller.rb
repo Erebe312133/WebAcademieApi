@@ -6,21 +6,22 @@ class UsersController < ApplicationController
     if @users.blank?
       render json: "Users not found", status: 404
     else
-      render "user/index", status: 200
+      render "users/index", status: 200
     end
   end
 
   def create
+    return if already_exist
     @user = User.new(params_required)
     if @user.save
-      render json: "successful operation", status: 202
+      render json: "successful operation", status: 200
     else
-      render json: "Invalid input", status: 401
+      render json: "Invalid data", status: 401
     end
   end
 
   def show
-    render "user/show", status: 200
+    render "users/show", status: 200
   end
 
   def update
@@ -38,19 +39,22 @@ class UsersController < ApplicationController
 
   def skill_list
     @skills = @user.skills.all
-    render "skill/index"
+    render "skills/index", status: 200
   end
 
   def index_by_skill
     @users = User.with_skill_type(params[:type])
-    render "user/index"
+    render "users/index", status: 200
   end
 
   def index_by_skill_and_note
-    @users = User.with_skill_type_and_note(params[:type], params[:note])
-    render "user/index"
+    unless params[:note] =~ /\A[0-5]\z/
+      render 'Invalid parameters supplied', 400
+    else
+      @users = User.with_skill_type_and_note(params[:type], params[:note])
+      render "users/index", status: 200
+    end
   end
-
 
   private
   def find_user
@@ -58,6 +62,14 @@ class UsersController < ApplicationController
     if @user.blank?
       render json: "User not found", status: 404
     end
+  end
+
+  def already_exist
+    unless User.find_by_email(params[:email]).blank?
+      render json: "User already exist", status: 401
+      return true
+    end
+    return false
   end
 
   def params_required
